@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,12 +24,14 @@ import com.facebook.login.widget.LoginButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView info;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     Button INVITE;
+    //Button Createdb;
+    Database db;
     Button btnShowLocation;
     //GPSTracker gps;
 
@@ -36,6 +39,26 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+
+       /* Createdb.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+
+
+                db = new Database(LoginActivity.this);
+                db.open();
+
+
+
+
+
+
+                db.close();
+
+            }
+
+        });*/
         //btnShowLocation = (Button) findViewById(R.id.getloc);
 
         // show location button click event
@@ -74,6 +97,9 @@ public class LoginActivity extends AppCompatActivity {
 
         INVITE = (Button)findViewById(R.id.button1);
         Intent intent = new Intent(LoginActivity.this, Invitation.class) ;
+        //Createdb = (Button)findViewById(R.id.button3);
+        Intent intent1 =  new Intent(LoginActivity.this, Database.class);
+
 
 
         /*Facebook button and manager*/
@@ -154,5 +180,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
