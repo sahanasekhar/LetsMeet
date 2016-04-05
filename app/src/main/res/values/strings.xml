@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Let\'s MEET</string>
+    <string name="action_settings">Settings</string>
+    <string name= "facebook_app_id">959468390810474</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+</resources>

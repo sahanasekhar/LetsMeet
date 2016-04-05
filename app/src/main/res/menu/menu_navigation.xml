@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/asian"
+            android:title="Asian"
+           />
+        <item
+            android:id="@+id/bar"
+            android:title="Bar"
+            />
+        <item
+            android:id="@+id/buffet"
+            android:title="Buffet"
+            />
+        <item
+            android:id="@+id/coffee"
+            android:title="Coffee"
+            />
+        <item
+            android:id="@+id/fastfood"
+            android:title="FastFood"
+            />
+        <item
+            android:id="@+id/icecream"
+            android:title="Ice-Cream"
+            /><item
+        android:id="@+id/italian"
+        android:title="Italian"
+        />
+        <item
+            android:id="@+id/pizza"
+            android:title="Pizza"
+            />
+        <item
+            android:id="@+id/sandwich"
+            android:title="Sandwich"
+            />
+    </group>
+</menu>
