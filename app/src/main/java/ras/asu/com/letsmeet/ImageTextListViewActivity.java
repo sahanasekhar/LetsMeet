@@ -3,7 +3,9 @@ package ras.asu.com.letsmeet;
 /**
  * Created by SahanaSekhar on 3/31/16.
  */
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +23,8 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,23 +46,43 @@ public class ImageTextListViewActivity extends Activity implements
             R.drawable.banana, R.drawable.orange, R.drawable.mixed };*/
 
     ListView listView;
+    Button createdb;
     List<RowItem> rowItems;
     ArrayList<String> friends = new ArrayList<String>();
     ArrayList<String> id = new ArrayList<String>();
     List<List<Bitmap>> aList = new ArrayList<List<Bitmap>>();
     String ID;
+    Database db;
+    File mydir;
+
+
 
     ImageView raks;
     /** Called when the activity is first created. */
+
+
+
 
 List<Bitmap> imagesB = new ArrayList<Bitmap>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+       // createdb = (Button)findViewById(R.id.button3);
          //raks = (ImageView)findViewById(R.id.raks);
         Intent intent = getIntent();
         String jsondata = intent.getStringExtra("jsondata");
+
+
+         mydir = getApplicationContext().getDir("images", Context.MODE_PRIVATE); //Creating an internal dir;
+        if(!mydir.exists())
+        {
+            mydir.mkdirs();
+        }
+
+        /*File sub = new File(getApplicationContext().getFilesDir(), "subdirectory");
+        if (!sub.exists())
+            sub.mkdirs();*/
 
         JSONArray friendslist = null;
 
@@ -121,6 +146,24 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
                 imageURL = new URL("https://graph.facebook.com/" + id.get(i) + "/picture?type=large");
                 Bitmap b = imagesB.get(i);
                  b = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
+                int p;
+                //for(p=0;p<friends.size();p++)
+                //{
+                    File mypath = new File(mydir, id.get(i));
+                    FileOutputStream fos = null;
+                    try{
+                        fos = new FileOutputStream(mypath);
+                        b.compress(Bitmap.CompressFormat.PNG,100, fos);
+                    }catch(Exception e){
+                        e.printStackTrace();
+
+                    }finally{
+                        fos.close();
+                    }
+                    //return mydir.getPath();
+                //}
+
+
                 rowItems.get(i).setImage(b);
                 imagesB.set(i, b);
 
@@ -149,6 +192,16 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
                 CustomListViewAdapter adapter = new CustomListViewAdapter(getApplicationContext(),
                         R.layout.list_item, rowItems);
                 listView.setAdapter(adapter);
+                db = new Database(ImageTextListViewActivity.this);
+                db.open();
+                for(int i=0;i<friends.size();i++)
+                {
+                    db.createEntry(id.get(i),friends.get(i),getApplicationContext().getDir("images", Context.MODE_PRIVATE )+"/"+friends.get(i)+".PNG");
+                }
+
+
+
+                db.close();
             }//public void run() {
         });
 
