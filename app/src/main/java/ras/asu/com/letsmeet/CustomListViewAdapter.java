@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -25,13 +27,15 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
     private class ViewHolder {
         ImageView imageView;
         TextView txtTitle;
-        TextView txtDesc;
+        Button invite;
     }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
+    ViewGroup parent;
+    int position1;
+    public View getView(int position, View convertView, ViewGroup parent1) {
         ViewHolder holder = null;
+        position1 =position;
         RowItem rowItem = getItem(position);
-
+        parent =parent1;
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
@@ -40,6 +44,7 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
             //holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
             holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+            holder.invite= (Button)convertView.findViewById(R.id.button1);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
@@ -47,6 +52,13 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
         //holder.txtDesc.setText(rowItem.getDesc());
         holder.txtTitle.setText(rowItem.getTitle());
         holder.imageView.setImageBitmap(rowItem.getImage());
+        holder.invite.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                ((ListView) parent).performItemClick(v, position1, 0); // Let the event be handled in onItemClick()
+            }
+        });
         //holder.imageView.setImageResource(rowItem.getImageId());
 
         return convertView;

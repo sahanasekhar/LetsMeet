@@ -1,8 +1,5 @@
 package ras.asu.com.letsmeet;
 
-/**
- * Created by SahanaSekhar on 3/31/16.
- */
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -29,10 +25,49 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ImageTextListViewActivity extends Activity implements
         OnItemClickListener {
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     /*public static final String[] titles = new String[] { "Strawberry",
             "Banana", "Orange", "Mixed" };
@@ -58,6 +93,7 @@ public class ImageTextListViewActivity extends Activity implements
 
 
     ImageView raks;
+
     /** Called when the activity is first created. */
 
 
@@ -110,26 +146,27 @@ List<Bitmap> imagesB = new ArrayList<Bitmap>();
             }
         }
         new loadImage().execute();
-
-
-
-
-
         listView = (ListView) findViewById(R.id.list);
         CustomListViewAdapter adapter = new CustomListViewAdapter(this,
                 R.layout.list_item, rowItems);
-        listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+        listView.setAdapter(adapter);
+        registerUser(ProjCostants.FB_ID);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
-                Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
+        int id1 = view.getId();
+        if(id1==R.id.button1) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Item " + (position + 1) + ": " + rowItems.get(position),
+                    Toast.LENGTH_SHORT);
+            sendInvite(rowItems.get(position).getImageId());
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+            toast.show();
+        }
     }
 public class loadImage extends AsyncTask<Void,Void,Void>{
 
@@ -213,6 +250,100 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
 
 
         return null;
+    }
+
+    private void registerUser(String fbId) {
+        Map<String , String > jobj = new HashMap<String,String>();
+        jobj.put("gcmId",ProjCostants.REG_ID);
+        jobj.put("fbId",fbId);
+        jobj.put("action", "addNewUser");
+        StoreUserDataAsyncTask asyn = new StoreUserDataAsyncTask(jobj);
+        asyn.execute();
+    }
+
+    private void sendInvite(String fbId) {
+        Map<String , String > jobj = new HashMap<String,String>();
+        jobj.put("message",ProjCostants.INVITE_TOKEN);
+        jobj.put("fbId",fbId);
+        jobj.put("action", "sendRequest");
+        jobj.put("myFbId", ProjCostants.FB_ID);
+        StoreUserDataAsyncTask asyn = new StoreUserDataAsyncTask(jobj);
+        asyn.execute();
+    }
+
+    public class StoreUserDataAsyncTask extends AsyncTask<Void, Void, Void> {
+        Map <String,String> paramsMap= new HashMap<String,String>();
+
+        public StoreUserDataAsyncTask(Map <String,String> p) {
+            paramsMap = p;
+            // this.userCallBack = userCallBack;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            String result = "";
+
+            URL serverUrl = null;
+            try {
+                serverUrl = new URL(ProjCostants.SERVER_ADDRESS);
+                Log.d("URL PROBLEM", serverUrl.toString());
+            } catch (MalformedURLException e) {
+                Log.e("AppUtil", "URL Connection Error: "
+                        + ProjCostants.SERVER_ADDRESS, e);
+                result = ProjCostants.SERVER_ADDRESS;
+            }
+
+            StringBuilder postBody = new StringBuilder();
+            Iterator<Map.Entry<String, String>> iterator = paramsMap.entrySet()
+                    .iterator();
+
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> param = iterator.next();
+                postBody.append(param.getKey()).append('=')
+                        .append(param.getValue());
+                if (iterator.hasNext()) {
+                    postBody.append('&');
+                }
+            }
+            String body = postBody.toString();
+            byte[] bytes = body.getBytes();
+            HttpURLConnection httpCon = null;
+            try {
+                httpCon = (HttpURLConnection) serverUrl.openConnection();
+                httpCon.setDoOutput(true);
+                httpCon.setUseCaches(false);
+                httpCon.setFixedLengthStreamingMode(bytes.length);
+                httpCon.setRequestMethod("GET");
+                httpCon.setRequestProperty("Content-Type",
+                        "application/x-www-form-urlencoded;charset=UTF-8");
+                OutputStream out = httpCon.getOutputStream();
+                out.write(bytes);
+                out.close();
+
+                int status = httpCon.getResponseCode();
+                if (status == 200) {
+                    result =  "Success";
+                } else {
+                    result = "Post Failure." + " Status: " + status;
+                }
+            }
+            catch (Exception e){
+                Log.d("SOME ERROR", e.toString());
+                httpCon.disconnect();
+            }
+            return null;
+
+
+            //return null;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+
     }
 
 }

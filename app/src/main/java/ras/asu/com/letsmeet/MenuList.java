@@ -3,6 +3,7 @@ package ras.asu.com.letsmeet;
 /**
  * Created by Aditya on 3/19/2016.
  */
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -26,6 +27,16 @@ public class MenuList extends AppCompatActivity {
         setSupportActionBar(toolbar);
         initNavigationDrawer();
 
+        Intent intent = getIntent();
+        if(intent!=null && intent.getAction()!=null) {
+            String action = intent.getAction();
+           // String type = intent.getType();
+
+            if (action.equals("acceptReq")) {
+               //
+                Toast.makeText(getApplicationContext(),"Request Accepted",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void initNavigationDrawer() {

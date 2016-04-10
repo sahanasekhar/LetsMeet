@@ -1,8 +1,10 @@
 package ras.asu.com.letsmeet;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,9 +22,12 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button INVITE;
     //Button Createdb;
     Database db;
+    GoogleCloudMessaging gcm;
     Button btnShowLocation;
     //GPSTracker gps;
 
@@ -89,16 +95,58 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         );*/
 
     }
+    String regid;
+    GraphResponse response;
+    public void getRegId(){
+        new AsyncTask<Void, Void, String>() {
+            // GraphResponse response1 = response;
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regid = gcm.register(ProjCostants.PROJECT_NUMBER);
+                    ProjCostants.REG_ID = regid;
+                    msg = "Device registered, registration ID=" + regid;
+                    Log.i("GCM", msg);
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginActivity.this, ImageTextListViewActivity.class);
+                try {
+                    if(response!=null) {
+                        JSONArray rawName = response.getJSONObject().getJSONArray("data");
+                        intent.putExtra("jsondata", rawName.toString());
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.execute(null, null, null);
+    }
 
 
-        @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         INVITE = (Button)findViewById(R.id.button1);
         Intent intent = new Intent(LoginActivity.this, Invitation.class) ;
         //Createdb = (Button)findViewById(R.id.button3);
-        Intent intent1 =  new Intent(LoginActivity.this, Database.class);
+        //  Intent intent1 =  new Intent(LoginActivity.this, Database.class);
 
 
 
@@ -111,7 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setReadPermissions("user_friends");
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
 
                 GraphRequestAsyncTask graphRequestAsyncTask = new GraphRequest(
                         loginResult.getAccessToken(),
@@ -120,22 +168,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                Intent intent = new Intent(LoginActivity.this, ImageTextListViewActivity.class);
-                                try {
-                                    JSONArray rawName = response.getJSONObject().getJSONArray("data");
-                                    intent.putExtra("jsondata", rawName.toString());
-                                    startActivity(intent);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                            public void onCompleted(GraphResponse response1) {
+                                response = response1;
+                                ProjCostants.FB_ID = loginResult.getAccessToken().getUserId();
+                                getRegId();
+                                info.setText("User ID: " + loginResult.getAccessToken().getUserId() + "\n" + "Auth Token: " + loginResult.getAccessToken().getToken());
                             }
                         }
                 ).executeAsync();
-                //info.setText("User ID: " + loginResult.getAccessToken().getUserId()  + "\n" +  "Auth Token: " + loginResult.getAccessToken().getToken() );
-                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(LoginActivity.this, MenuList.class);
                 startActivity(intent1);
+
             }
 
             @Override
@@ -186,4 +229,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
 
     }
+
 }
