@@ -2,9 +2,12 @@ package ras.asu.com.letsmeet;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.LinkedList;
 
 /**
  * Created by SahanaSekhar on 4/4/16.
@@ -14,9 +17,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class Database {
 
     public static final String KEY_PRIMARY = "_ID";
+
     public static final String KEY_USERID = "USER_ID";
     public static final String KEY_USERNAME = "USER_NAME";
     public static final String KEY_USERURL = "USER_URL";
+    public static final String KEY_IS_FRIEND = "IS_FRIEND";
     //public static final String DATABASE_TABLE = "FRIENDS";
     //public static final String KEY_ZVALUE = "Z_VALUE";
     private static final String TAG = "DBAdapter";
@@ -44,8 +49,9 @@ public class Database {
             // TODO Auto-generated method stub
             db.execSQL("CREATE TABLE " + DATABASE_TABLE + " (" +
                             KEY_PRIMARY + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                            KEY_USERID + " TEXT NOT NULL, "+
+                            KEY_USERID + " TEXT NOT NULL UNIQUE, "+
                             KEY_USERNAME + " TEXT NOT NULL,"+
+                            KEY_IS_FRIEND+" INTEGER DEFAULT 0,"+
                             KEY_USERURL + " TEXT NOT NULL);"
             );
 
@@ -89,23 +95,66 @@ public class Database {
         return 0;
 
     }*/
-    public long createEntry(String avol, String mvol,String nvol) {
+    public long createEntry(String avol, String mvol,String nvol,int isFriend) {
         // TODO Auto-generated method stub
-        // Stack <Integer,Integer[]> s = new Stack<>();
-        //addTable(tableName);
-        //DbHelper.DATABASE_TABLE = tableName;
-        ContentValues cv = new ContentValues();
+        try {
+            ContentValues cv = new ContentValues();
 
-        cv.put(KEY_USERID, avol);
-        cv.put(KEY_USERNAME, mvol);
-        cv.put(KEY_USERURL, nvol);
-        //cv.put(KEY_ZVALUE, rvol);
-        //cv.put(KEY_PNAME, pname);
+            cv.put(KEY_USERID, avol);
+            cv.put(KEY_USERNAME, mvol);
+            cv.put(KEY_USERURL, nvol);
+            cv.put(KEY_IS_FRIEND, isFriend);
 
-        return ourDatabase.insert(DbHelper.DATABASE_TABLE, null, cv);
+            return ourDatabase.insert(DbHelper.DATABASE_TABLE, null, cv);
 
-
+        }
+catch(Exception e)
+{
+    e.printStackTrace();
+}
+return 0;
     }
+
+    public LinkedList<User> getMutualUsers()
+    {
+        LinkedList<User> users = new LinkedList<User>();
+
+        String[] columns = new String[]{ KEY_USERID,KEY_USERNAME,KEY_USERURL};
+        String[] whereArgs = new String[] {
+                "1"
+        };
+        Cursor c = ourDatabase.query(DbHelper.DATABASE_TABLE, columns, KEY_IS_FRIEND+"= ?",whereArgs , null, null, null);
+        //List<Map<String , String>> d = new LinkedList<HashMap<String,String>>();
+        String result="";
+        int usrID = c.getColumnIndex(KEY_USERID);
+        int usrName = c.getColumnIndex(KEY_USERNAME);
+        int usrUrl = c.getColumnIndex(KEY_USERURL);
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()){
+            User u = new User();
+            u.setKEY_USERID(c.getString(usrID));
+            u.setKEY_USERNAME(c.getString(usrName));
+            u.setKEY_USERURL(c.getString(usrUrl));
+            users.add(u);
+
+        }
+
+
+        return users;
+    }
+
+public void  addIsFriend(String fbId)
+{
+try {
+    ContentValues cv = new ContentValues();
+    cv.put(KEY_IS_FRIEND, 1);
+
+    ourDatabase.update(DbHelper.DATABASE_TABLE, cv, KEY_USERID + "=" + fbId, null);
+}
+catch(Exception e)
+{
+    e.printStackTrace();
+}
+}
 
 
     /*public List<Map<String, String>> getData(String TableName) {

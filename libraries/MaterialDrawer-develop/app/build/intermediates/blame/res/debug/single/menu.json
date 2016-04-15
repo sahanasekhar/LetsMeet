@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\menu\\cab.xml",
+        "source": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\menu\\cab.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\menu\\embedded.xml",
+        "source": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\menu\\embedded.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\menu\\example_menu.xml",
+        "source": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\menu\\example_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\menu\\fragment_menu.xml",
+        "source": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\menu\\fragment_menu.xml"
+    }
+]

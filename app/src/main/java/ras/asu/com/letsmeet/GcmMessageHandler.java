@@ -41,7 +41,7 @@ public class GcmMessageHandler extends IntentService {
         String messageType = gcm.getMessageType(intent);
         mes = extras.getString("message");
         from = extras.getString("sendersFbId");
-        sendNotification(extras.getString("message")+" from " +from,extras.getString("sendersFbId"));
+        sendNotification(extras.getString("message")+" from " +from,extras.getString("title"),from);
 
         showToast();
         Log.i("GCM", "Received : (" +messageType+" )  "+extras.getString("title"));
@@ -49,7 +49,7 @@ public class GcmMessageHandler extends IntentService {
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
     }
-    private void sendNotification(String msg , String title) {
+    private void sendNotification(String msg , String title, String from) {
         /*
         Log.d("TAG", "Preparing to send notification...: " + msg);
         mNotificationManager = (NotificationManager) this
@@ -75,12 +75,12 @@ public class GcmMessageHandler extends IntentService {
         PendingIntent pReceiverIntent = PendingIntent.getActivity(this, 1, receiverIntent, 0);
         Intent clearIntent = new Intent(this, LoginActivity.class);
         clearIntent.setAction("cancelReq");
-        clearIntent.putExtra("action","cancelReq");
+        clearIntent.putExtra("fbID",from);
         PendingIntent pClearIntent = PendingIntent.getActivity(this, 1, clearIntent, 0);
 
         Intent colorsIntent = new Intent(this, MenuList.class);
         colorsIntent.setAction("acceptReq");
-        clearIntent.putExtra("action", "acceptReq");
+        colorsIntent.putExtra("fbID", from);
         PendingIntent pColorsIntent = PendingIntent.getActivity(this, 1, colorsIntent, 0);
         NotificationCompat.Action cancel = new NotificationCompat.Action.Builder(R.drawable.cancel, "Cancel", pClearIntent).build();
         NotificationCompat.Action accept = new NotificationCompat.Action.Builder(R.drawable.accpt, "Accept", pColorsIntent).build();

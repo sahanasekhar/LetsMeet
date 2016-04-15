@@ -104,9 +104,8 @@ List<Bitmap> imagesB = new ArrayList<Bitmap>();
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-       // createdb = (Button)findViewById(R.id.button3);
-         //raks = (ImageView)findViewById(R.id.raks);
         Intent intent = getIntent();
+
         String jsondata = intent.getStringExtra("jsondata");
 
 
@@ -129,7 +128,7 @@ List<Bitmap> imagesB = new ArrayList<Bitmap>();
                 id.add(friendslist.getJSONObject(l).getString("id"));
                 Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
                 Bitmap bmp = Bitmap.createBitmap(100, 100, conf);
-                imagesB.add(bmp);
+                    imagesB.add(bmp);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -186,7 +185,7 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
                 int p;
                 //for(p=0;p<friends.size();p++)
                 //{
-                    File mypath = new File(mydir, id.get(i));
+                    File mypath = new File(mydir, id.get(i)+".jpg");
                     FileOutputStream fos = null;
                     try{
                         fos = new FileOutputStream(mypath);
@@ -233,7 +232,7 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
                 db.open();
                 for(int i=0;i<friends.size();i++)
                 {
-                    db.createEntry(id.get(i),friends.get(i),getApplicationContext().getDir("images", Context.MODE_PRIVATE )+"/"+friends.get(i)+".PNG");
+                    db.createEntry(id.get(i),friends.get(i),getApplicationContext().getDir("images", Context.MODE_PRIVATE )+"/"+friends.get(i)+".JPG",0);
                 }
 
 

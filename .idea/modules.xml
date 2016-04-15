@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LetsMEET_5.iml" filepath="$PROJECT_DIR$/LetsMEET_5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LetsMeet.iml" filepath="$PROJECT_DIR$/LetsMeet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/MaterialDrawer-develop/MaterialDrawer-develop.iml" filepath="$PROJECT_DIR$/libraries/MaterialDrawer-develop/MaterialDrawer-develop.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-    </modules>
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />   </modules>
   </component>
 </project>

@@ -1,0 +1,260 @@
+[
+    {
+        "outputFile": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\res\\merged\\debug\\values-v23\\values-v23.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 59,
+                    "endOffset": 110
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\src\\main\\res\\values-v23\\dimens.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 59,
+                        "endOffset": 110
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 115,
+                    "endColumn": 51,
+                    "endOffset": 162
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.mikepenz\\materialize\\0.8.8\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 51,
+                        "endOffset": 102
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 167,
+                    "endColumn": 134,
+                    "endOffset": 297
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 134,
+                        "endOffset": 185
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 302,
+                    "endColumn": 134,
+                    "endOffset": 432
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 190,
+                        "endColumn": 134,
+                        "endOffset": 320
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 437,
+                    "endColumn": 74,
+                    "endOffset": 507
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 325,
+                        "endColumn": 74,
+                        "endOffset": 395
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 512,
+                    "endColumn": 86,
+                    "endOffset": 594
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 400,
+                        "endColumn": 86,
+                        "endOffset": 482
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 599,
+                    "endLine": 20,
+                    "endColumn": 12,
+                    "endOffset": 1384
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 487,
+                        "endLine": 18,
+                        "endColumn": 12,
+                        "endOffset": 1272
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 1389,
+                    "endLine": 33,
+                    "endColumn": 12,
+                    "endOffset": 2186
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 19,
+                        "startColumn": 4,
+                        "startOffset": 1277,
+                        "endLine": 31,
+                        "endColumn": 12,
+                        "endOffset": 2074
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 34,
+                    "startColumn": 4,
+                    "startOffset": 2191,
+                    "endColumn": 104,
+                    "endOffset": 2291
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 2079,
+                        "endColumn": 104,
+                        "endOffset": 2179
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 35,
+                    "startColumn": 4,
+                    "startOffset": 2296,
+                    "endColumn": 114,
+                    "endOffset": 2406
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 33,
+                        "startColumn": 4,
+                        "startOffset": 2184,
+                        "endColumn": 114,
+                        "endOffset": 2294
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 36,
+                    "startColumn": 4,
+                    "startOffset": 2411,
+                    "endColumn": 106,
+                    "endOffset": 2513
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 34,
+                        "startColumn": 4,
+                        "startOffset": 2299,
+                        "endColumn": 106,
+                        "endOffset": 2401
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 37,
+                    "startColumn": 4,
+                    "startOffset": 2518,
+                    "endColumn": 112,
+                    "endOffset": 2626
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 35,
+                        "startColumn": 4,
+                        "startOffset": 2406,
+                        "endColumn": 112,
+                        "endOffset": 2514
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 2631,
+                    "endLine": 40,
+                    "endColumn": 12,
+                    "endOffset": 2776
+                },
+                "from": {
+                    "file": "C:\\Users\\Rakesh\\Desktop\\MaterialDrawer-develop\\app\\build\\intermediates\\exploded-aar\\com.android.support\\cardview-v7\\23.3.0\\res\\values-v23\\values-v23.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endLine": 4,
+                        "endColumn": 12,
+                        "endOffset": 200
+                    }
+                }
+            }
+        ]
+    }
+]
