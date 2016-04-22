@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONObject;
@@ -20,17 +21,21 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
 
     JSONObject googlePlacesJson;
     GoogleMap googleMap;
+    HashMap <String, Place> mPlacesList = new HashMap<String,Place> ();
+    Place [] places = null;
 
     @Override
     protected List<HashMap<String, String>> doInBackground(Object... inputObj) {
 
         List<HashMap<String, String>> googlePlacesList = null;
         Places placeJsonParser = new Places();
+        PlaceJSONParser placeJson = new PlaceJSONParser();
 
         try {
             googleMap = (GoogleMap) inputObj[0];
             googlePlacesJson = new JSONObject((String) inputObj[1]);
             googlePlacesList = placeJsonParser.parse(googlePlacesJson);
+            places = placeJson.parse(googlePlacesJson);
         } catch (Exception e) {
             Log.d("Exception", e.toString());
         }
@@ -39,7 +44,7 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
 
     @Override
     protected void onPostExecute(List<HashMap<String, String>> list) {
-        googleMap.clear();
+        //googleMap.clear();
         for (int i = 0; i < list.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String, String> googlePlace = list.get(i);
@@ -50,9 +55,13 @@ public class PlacesDisplayTask extends AsyncTask<Object, Integer, List<HashMap<S
             LatLng latLng = new LatLng(lat, lng);
             if(placeName==null)
             placeName =placeName.toLowerCase();
+            //Marker m = drawMarker(point,UNDEFINED_COLOR);
             markerOptions.position(latLng);
             markerOptions.title(placeName + " : " + vicinity);
-            googleMap.addMarker(markerOptions);
+            Marker m = googleMap.addMarker(markerOptions);
+            mPlacesList.put(m.getId(), places[i]);
         }
+        MapsActivity.setMapDataMarkers(mPlacesList);
+      //  for(Place place:places)
     }
 }

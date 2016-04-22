@@ -69,7 +69,6 @@ public class MenuList extends AppCompatActivity implements Drawer.OnDrawerItemCl
             // String type = intent.getType();
             try {
                 if (action.equals("acceptReq")) {
-                    //
                     db.addIsFriend(intent.getStringExtra("fbID"));
                     sendInvite(intent.getStringExtra("fbID"));
                     Toast.makeText(getApplicationContext(), "Request Accepted", Toast.LENGTH_SHORT).show();
@@ -114,6 +113,7 @@ public class MenuList extends AppCompatActivity implements Drawer.OnDrawerItemCl
                 PrimaryDrawerItem p = (PrimaryDrawerItem) drawerItem;
                 intent = new Intent(MenuList.this, SelectPlaceOrPersonScreen.class);
                 intent.putExtra("fbId", p.getDescription().getText());
+                ProjCostants.OTHER_GUYS_FB_ID = p.getDescription().getText();
                 intent.setAction("userNameClick");
                // startActivity(intent);
             } else if (drawerItem.getIdentifier() == 2000) {
@@ -218,8 +218,12 @@ public class MenuList extends AppCompatActivity implements Drawer.OnDrawerItemCl
                     s.addDrawerItems(
 
                             new ExpandableDrawerItem().withName("Meet Up Places").withIcon(R.drawable.backgroundpic).withIdentifier(19).withSelectable(false).withSubItems(
-                                    new SecondaryDrawerItem().withName("Coffee").withLevel(2).withIcon(R.drawable.backgroundpic).withIdentifier(2000),
-                                    new SecondaryDrawerItem().withName("Lunch").withLevel(2).withIcon(R.drawable.backgroundpic).withIdentifier(200)));
+                                    new SecondaryDrawerItem().withName("Coffee").withLevel(2).withIcon(R.drawable.coffee_cup_icon_70002).withIdentifier(2000),
+                                    new SecondaryDrawerItem().withName("Restaurant").withLevel(2).withIcon(R.drawable.city_restaurant_icon).withIdentifier(2000),
+                                    new SecondaryDrawerItem().withName("icecream").withLevel(2).withIcon(R.drawable.cup_ice_cream).withIdentifier(2000),
+                                    new SecondaryDrawerItem().withName("pizza").withLevel(2).withIcon(R.drawable.food_pizza_icon).withIdentifier(2000),
+                                    new SecondaryDrawerItem().withName("fastfood").withLevel(2).withIcon(R.drawable.food_cooking_meal_5_512).withIdentifier(2000)
+                                    ));
 
                     result = s.withOnDrawerItemClickListener(MenuList.this)
                             .withSavedInstance(s2)

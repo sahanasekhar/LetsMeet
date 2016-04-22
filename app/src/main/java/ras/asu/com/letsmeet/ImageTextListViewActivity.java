@@ -262,7 +262,7 @@ public class loadImage extends AsyncTask<Void,Void,Void>{
 
     private void sendInvite(String fbId) {
         Map<String , String > jobj = new HashMap<String,String>();
-        jobj.put("message",ProjCostants.INVITE_TOKEN);
+            jobj.put("message",ProjCostants.INVITE_TOKEN);
         jobj.put("fbId",fbId);
         jobj.put("action", "sendRequest");
         jobj.put("myFbId", ProjCostants.FB_ID);

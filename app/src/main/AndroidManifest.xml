@@ -12,6 +12,15 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <uses-library android:name="com.google.android.maps" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <permission
+        android:name="com.androidbunch.drawroutev2.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
     <permission
         android:name="ras.asu.com.letsmeet.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
@@ -32,11 +41,6 @@
             android:name=".LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MenuList" />
 
@@ -60,7 +64,17 @@
         </activity>
         <activity
             android:name=".ImageTextListViewActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".GcmBroadcastReceiver"
@@ -72,7 +86,13 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".GcmMessageHandler" />
+        <service android:name=".GcmMessageHandler">
+            <intent-filter>
+                <action android:name="android.intent.action.MapsActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -81,6 +101,20 @@
         <activity
             android:name=".SelectPlaceOrPersonScreen"
             android:label="@string/title_activity_select_place_or_person_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".LocationService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCj8mNXSWJzqSyK8l_gWJRuQpTMEQWcgQE" />
+
+        <activity
+            android:name=".Attribution"
+            android:label="@string/title_activity_attribution"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

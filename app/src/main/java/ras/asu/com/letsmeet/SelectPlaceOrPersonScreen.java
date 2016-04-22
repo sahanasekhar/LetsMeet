@@ -20,6 +20,7 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -62,6 +63,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class SelectPlaceOrPersonScreen extends Activity implements
         OnItemClickListener {
@@ -99,18 +101,20 @@ public class SelectPlaceOrPersonScreen extends Activity implements
      * Called when the activity is first created.
      */
 
-
+    Intent sendIntent;
     List<Bitmap> imagesB = new ArrayList<Bitmap>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_select_place_or_person_screen);
+        rowItems = new LinkedList<RowItem>();
         Intent intent = getIntent();
+         sendIntent = new Intent();
         if (intent != null) {
             String action = intent.getAction();
             if (action != null && action.equalsIgnoreCase("placeClick")) {
-
+                sendIntent.putExtra("place",intent.getStringExtra("place"));
                 mydir = getApplicationContext().getDir("images", Context.MODE_PRIVATE); //Creating an internal dir;
                // File mypath = new File(mydir, id.get(i)+".jpg");
 
@@ -135,8 +139,27 @@ public class SelectPlaceOrPersonScreen extends Activity implements
                     e.printStackTrace();
                 }
             }
+            if (action != null && action.equalsIgnoreCase("userNameClick")) {
+
+                mydir = getApplicationContext().getDir("images", Context.MODE_PRIVATE); //Creating an internal dir;
+                sendIntent.putExtra("fbId",intent.getStringExtra("fbId"));
+                try {
+                    Map<String, Integer> data = new ImageMappings().data;
+                    Set<String> strings = data.keySet();
+                    for (String s :strings) {
+
+                        friends.add(s);
+                        id.add(s);
+                        Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                                data.get(s));
+                        imagesB.add(icon);
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < friends.size(); i++) {
             try {
                 RowItem item = new RowItem(friends.get(i), id.get(i), imagesB.get(i));
@@ -156,11 +179,14 @@ public class SelectPlaceOrPersonScreen extends Activity implements
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         int id1 = view.getId();
-        if (id1 == R.id.button1) {
+        //if (id1 == R.id.button1)
+        {
             Toast toast = Toast.makeText(getApplicationContext(),
                     "Item " + (position + 1) + ": " + rowItems.get(position),
                     Toast.LENGTH_SHORT);
             sendInvite(rowItems.get(position).getImageId());
+            ProjCostants.OTHER_GUYS_FB_ID = rowItems.get(position).getImageId();
+
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
             toast.show();
@@ -224,15 +250,25 @@ public class SelectPlaceOrPersonScreen extends Activity implements
                 httpCon.setRequestProperty("Content-Type",
                         "application/x-www-form-urlencoded;charset=UTF-8");
                 OutputStream out = httpCon.getOutputStream();
+
                 out.write(bytes);
                 out.close();
 
                 int status = httpCon.getResponseCode();
+                StringBuilder json=new StringBuilder();
                 if (status == 200) {
                     result = "Success";
+                    InputStream in = new BufferedInputStream(httpCon.getInputStream());
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        json.append(line);
+                    }
+                    startActivity(sendIntent);
                 } else {
                     result = "Post Failure." + " Status: " + status;
                 }
+
             } catch (Exception e) {
                 Log.d("SOME ERROR", e.toString());
                 httpCon.disconnect();

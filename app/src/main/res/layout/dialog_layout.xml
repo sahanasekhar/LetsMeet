@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_horizontal" >
+
+    <TextView
+        android:id="@+id/tv_vicinity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2" />
+
+    <ViewFlipper
+        android:id="@+id/flipper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+    </ViewFlipper>
+
+    <TextView
+        android:id="@+id/tv_photos_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/lat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <TextView
+        android:id="@+id/longt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <TextView
+        android:id="@+id/elat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <TextView
+        android:id="@+id/slongt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <TextView
+        android:id="@+id/slat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <TextView
+        android:id="@+id/elongt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="0sp"
+        android:textColor="@android:color/transparent"/>
+    <Button
+        android:id="@+id/goThere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+android:text="Start Navigation"
+        />
+
+</LinearLayout>
